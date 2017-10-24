@@ -143,14 +143,10 @@ class SearchResults extends Component {
                 <footer className="footer navbar-fixed-bottom">
                     <div className="preferences">
                         <h2 className="heading">Your Info </h2><br />
-                        <div className="majors">
-                            <h3 className="itemTitle">Major: </h3>
-                            <h3 className="item">{this.user.preferences.major}</h3><br />
-                        </div>
-                        <div className="states">
-                            <h3 className="itemTitle">State(s): </h3>
-                            <h3 className="item">{this.user.preferences.location}</h3>
-                        </div>
+                        <h3 className="itemTitle">Major: </h3>
+                        <h3 className="item">{this.user.preferences.major}</h3><br />
+                        <h3 className="itemTitle">State(s): </h3>
+                        <h3 className="item">{this.user.preferences.location}</h3>
                     </div>
                 </footer>
                 <div className="container searchTable">
