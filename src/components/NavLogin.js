@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavItem, Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap';
 import { Link, browserHistory } from 'react-router';
 
 import {User} from '../models/User'
@@ -16,8 +16,10 @@ class NavLogin extends Component {
         user.username = form.username.value;
         user.password = form.password.value
   
-        this.props.login(user)
-        browserHistory.push('/searchresults');
+        this.props.login(user).then(()=>{
+            browserHistory.push('/searchresults');
+        })
+        
   
     }
 
@@ -29,7 +31,7 @@ class NavLogin extends Component {
   
     render() {
         
-        if(this.props.currentUser.id){
+        if(this.props.currentUser){
             
           let user = this.props.currentUser;
   

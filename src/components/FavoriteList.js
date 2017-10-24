@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Button } from 'react-bootstrap';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
-import { Link } from 'react-router';
-import { School } from '../models/School'
 import "./FavoriteList.css"
 
 let userListID="";
@@ -28,9 +26,6 @@ class FavoriteList extends Component {
     deleteFavoriteSchool = (event) => {
         // event.preventDefault ();
         let schoolToDelete = event.target.id
-        console.log(schoolToDelete)
-        console.log(userListID)
-
         this.props.deleteSchoolFromFavoriteList(userListID, schoolToDelete);
 
     }
@@ -61,7 +56,7 @@ class FavoriteList extends Component {
         if(this.props.currentUser.schoolList.schools){
             this.data = this.props.currentUser.schoolList.schools.map(
               school => {
-                let temp = parseInt(school.avgNet)
+                let temp = parseInt(school.avgNet, 10)
                 let nameLink = school.schoolUrl
       
                 return { 

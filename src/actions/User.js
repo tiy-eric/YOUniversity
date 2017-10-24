@@ -6,21 +6,19 @@ const baseUrl = 'https://youniversity1.herokuapp.com'
 export function login(user) {
 
     return dispatch => {
-        request.put(`${baseUrl}/api/session/mine`)
+        return request.put(`${baseUrl}/api/session/mine`)
         .set('Content-Type', 'application/json')
         .withCredentials()
         .send(user)
-        .end(
-            (error, response) => {
-                
-                if(error) {
-                    console.error("could not login user" + error);
-                    return;
-                }
+        .on("error", (error) => {
+                console.error("could not login user" + error);
+        })
+        .then(
+            (response) => {
                 
                 localStorage.setItem("currentUser", JSON.stringify(response.body));
 
-                dispatch({ type: 'USER_LOGIN' });
+                dispatch({ type: 'USER_LOGIN', result:  response.body});
 
             }
         )

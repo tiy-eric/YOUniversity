@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
-import {User} from '../models/User'
 
 import NavLoginContainer from '../containers/NavLogin'
 import "./Navigation.css"

@@ -19,7 +19,6 @@ export function getSchools(stateFilter = "",programFilter = ""){
   let search = "";
   let stateSearch = "";
   let programSearch = "";
-  let costSearch = "";
 
   //will need one of these for each filter
   if(stateFilter){

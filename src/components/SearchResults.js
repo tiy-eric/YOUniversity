@@ -1,39 +1,27 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
-import { Link } from 'react-router';
 import { School } from '../models/School'
 import './SearchResults.css';
-
-let userListID="";
-let userListSize="";
-
-  
-  
-
-
-
 
 
 
 class SearchResults extends Component {
     data = [];
     user;
+    
+    userListID;
+    userListSize;
 
-    localFavorites = new Array(0);
+    localFavorites = [];
 
     componentDidMount(){
-        if(this.props.currentUser.id){
+        if(this.props.currentUser){
             this.user = this.props.currentUser;
-            // console.log(user);
-            userListID = this.user.schoolList.id;
-            userListSize = this.user.schoolList.schools.length;
-            // console.log(`list id ${userListID} and list size ${userListSize}`)
+            this.userListID = this.user.schoolList.id;
             this.props.getSchools(this.user.preferences.location, this.user.preferences.major)
             this.loadFavorites(this.user.schoolList.schools);
         }
-        
-        
     }
 
     afterTabChanged() {
@@ -65,7 +53,7 @@ class SearchResults extends Component {
         //         this.localFavorites[j+listFromUser.length] = "Favorite Not Assigned"
         //     }
         // }
-        console.log(this.localFavorites)
+
         
     }
     
@@ -95,11 +83,10 @@ class SearchResults extends Component {
                     case 'rank':{schoolInfo.rank = row[prop]} break;
                 }
         }//create school item to pass to add method
-        this.props.addSchoolToFavoriteList(userListID, schoolInfo);
+        this.props.addSchoolToFavoriteList(this.userListID, schoolInfo);
         
-        alert (`Congrats ${this.props.currentUser.firstName}! ${schoolInfo.schoolName} has been added to your list!`)
         //isolate user name
-        console.log(this.user);
+
         
         //update favorites list on favorites snapshot
       }
@@ -117,7 +104,8 @@ class SearchResults extends Component {
     }
 
     formatCurrency(cell, row) {
-        return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+        // return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+        return cell;
     }
 
     selectRowProp = {
@@ -127,15 +115,13 @@ class SearchResults extends Component {
         onSelectAll: this.onSelectAll
     };
 
-
     render() {
+
         let favorites = this.localFavorites.map(function(value, key){
             return <li key={key}>{value}</li>;
         })
-        console.log(favorites)
 
         if(this.props.addedSchool){
-            console.log(this.props.addedSchool)
             this.props.refreshUser();
             this.loadFavorites(this.props.addedSchool.schools);
         }
@@ -170,10 +156,10 @@ class SearchResults extends Component {
             43:"Rural: Remote"
         }
 
-        if(this.props.searchResults && Array.isArray(this.props.searchResults)){
+        if(this.props.searchResults && Array.isArray(this.props.searchResults) && this.user){
             this.data = this.props.searchResults.map(
               school => {
-                let temp = parseInt(school['2015.cost.avg_net_price.overall'])
+                let temp = parseInt(school['2015.cost.avg_net_price.overall'], 10)
                 let nameLink = school['school.school_url']
       
                 return { 
@@ -241,7 +227,7 @@ class SearchResults extends Component {
         }
       
         //return outside the if for when we are waiting for the data
-        return (<div>loading...</div>)
+        return (<div><br/><br/><br/><br/>loading...</div>)
         
     }
 }
