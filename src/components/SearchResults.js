@@ -15,9 +15,9 @@ class SearchResults extends Component {
 
     componentDidMount(){//run if application loads appropriately
         if(this.props.currentUser){//if user information is available
-            this.user = this.props.currentUser;//set current user as user
-            userListID = this.user.schoolList.id;//get user list id for api call for favorites
-            userListSize = this.user.schoolList.schools.length;//get current favorites list size
+            this.user = this.props.currentUser;
+            userListID = this.user.schoolList.id;
+            userListSize = this.user.schoolList.schools.length;
             this.props.getSchools(this.user.preferences.location, this.user.preferences.major)
             this.loadFavorites(this.user.schoolList.schools);
         }  
@@ -27,20 +27,20 @@ class SearchResults extends Component {
         this.refs.searchResultTable.forceUpdate();
     }
 
-    linkFormatter(cell, row) {
+    linkFormatter(cell, row) {//formats link as an external html link
         return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';
     }
 
-    internalLinkFormatter(cell, row) {
+    internalLinkFormatter(cell, row) {//formats link as an internal html link
         return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
     }
 
-    loadFavorites(listFromUser) {
+    loadFavorites(listFromUser) {//loads current favorite list for user
         for(let i = 0; i < listFromUser.length; i++)
         {this.localFavorites[i]=listFromUser[i].schoolName;}
     }
     
-    onRowSelect = (row, isSelected, e, rowIndex) => {
+    onRowSelect = (row, isSelected, e, rowIndex) => {//adding a favorite to the favorite list of the user
         let rowStr = '';
         let schoolInfo = new School();
         for (const prop in row) {
@@ -65,15 +65,15 @@ class SearchResults extends Component {
         this.props.addSchoolToFavoriteList(userListID, schoolInfo);
       }
 
-      onSelectAll(isSelected, rows) {
+      onSelectAll(isSelected, rows) {//select all not currently supported
         if (isSelected) {alert('Select All not currently supported, please deselect and select each individual school to add to your Favorites List');} 
     }
 
-    formatFloat(cell, row) {return cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
+    formatFloat(cell, row) {return cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}//convert number with a comma inserted when appropriate
 
-    formatCurrency(cell, row) {return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
+    formatCurrency(cell, row) {return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}//convert number with a comma and dollar sign when appropriate
 
-    selectRowProp = {
+    selectRowProp = {//middle man method that drives activity based on what is selected in the table
         mode: 'checkbox',
         onSelect: this.onRowSelect,
         onSelectAll: this.onSelectAll
@@ -87,7 +87,7 @@ class SearchResults extends Component {
             this.loadFavorites(this.props.addedSchool.schools);
         }
             
-        const getDegree = {
+        const getDegree = {//lookup for degree value type in api
             0: 'Non-Degree-Granting',
             1: 'Certificate',
             2: 'Associate',
@@ -95,13 +95,13 @@ class SearchResults extends Component {
             4: 'Graduate'
         }
         
-        const getOwnership = {
+        const getOwnership = {//lookup for ownership value type in api
             1: "Public",
             2: "Private N-P",
             3: "Private F-P"
         }
       
-        const getLocale = {
+        const getLocale = {//lookup for locale value type in api
             11:"City: 250k+",
             12:"City: 100-250k",
             13:"City: <100k",
@@ -139,7 +139,47 @@ class SearchResults extends Component {
             )
           
         return (
+            // Main container for the page
             <div className="searchDashboard">
+
+                {/* main table of all that is the data for the search results */}
+                <div className="container searchTable">
+                    {/* help with user experience and instruction */}
+                    <div className="instructions">
+                        <p className="tip"><span className="glyphicon glyphicon-arrow-right"></span>TIP: Click Favorites section heading to open your Favorites List</p>
+                        <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Utilize NONE, ONE, or ALL filters below to find prospective schools</p>
+                        <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Click checkbox to add a school to your Favorites List</p>
+                    </div>
+                    <BootstrapTable ref="searchResultTable" data={ this.data } selectRow={ this.selectRowProp } search exportCSV={ true } pagination striped>
+                        <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'55'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>
+                        <TableHeaderColumn row='0' colSpan='4'>Basic School Info</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='size' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                        dataFormat={ this.formatFloat }>Size</TableHeaderColumn>
+                        <TableHeaderColumn id="state" row='1' dataField='state' width={'120'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
+                        <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} width={'150'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
+                        <TableHeaderColumn className='costInfo' row='0' colSpan='2'>School Cost Information</TableHeaderColumn>
+                        <TableHeaderColumn className='costInfo' row='1' dataField='inState' width={'120'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                        dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
+                        <TableHeaderColumn className='costInfo' row='1' dataField='outState' width={'120'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                        dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
+                    </BootstrapTable>
+
+                    {/* necessary js file for bootstrap table */}
+                    <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
+                </div>
+
+                {/* favorites list that shows favorite list for current user */}
+                <a href="/favoritelist" className="favoriteLink">
+                    <div className="favorites" href="/favoriteList">
+                        <h2 className="favoriteHeading">Your Favorites</h2><br />
+                        <ol className = "faveList">
+                            {favorites}
+                        </ol>
+                    </div>
+                </a>
+
+                {/* shows user preferences for current user */}
                 <footer className="footer navbar-fixed-bottom">
                     <div className="preferences">
                         <h2 className="heading">Your Info </h2><br />
@@ -149,36 +189,6 @@ class SearchResults extends Component {
                         <h3 className="item">{this.user.preferences.location}</h3>
                     </div>
                 </footer>
-                <div className="container searchTable">
-                    <div className="instructions">
-                    <p className="tip"><span className="glyphicon glyphicon-arrow-right"></span>TIP: Click Favorites section heading to open your Favorites List</p>
-                    <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Utilize NONE, ONE, or ALL filters below to find prospective schools</p>
-                    <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Click checkbox to add a school to your Favorites List</p>
-                </div>
-                <BootstrapTable ref="searchResultTable" data={ this.data } selectRow={ this.selectRowProp } search exportCSV={ true } pagination striped>
-                    <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'55'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>
-                    <TableHeaderColumn row='0' colSpan='4'>Basic School Info</TableHeaderColumn>
-                    <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
-                    <TableHeaderColumn row='1' dataField='size' dataSort width={'80'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                    dataFormat={ this.formatFloat }>Size</TableHeaderColumn>
-                    <TableHeaderColumn id="state" row='1' dataField='state' width={'55'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
-                    <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} width={'120'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
-                    <TableHeaderColumn className='costInfo' row='0' colSpan='2'>School Cost Information</TableHeaderColumn>
-                    <TableHeaderColumn className='costInfo' row='1' dataField='inState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                    dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
-                    <TableHeaderColumn className='costInfo' row='1' dataField='outState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                    dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
-                </BootstrapTable>
-                <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
-            </div>
-                <a href="/favoritelist" className="favoriteLink">
-                    <div className="favorites" href="/favoriteList">
-                        <h2 className="favoriteHeading">Your Favorites</h2><br />
-                        <ol className = "faveList">
-                            {favorites}
-                        </ol>
-                    </div>
-                </a>
             </div>
           );
         }
