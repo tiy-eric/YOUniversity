@@ -59,7 +59,9 @@ input:focus {
     margin: 0 0 0 4px;
 }
 
-
+.confirmation {
+    margin-top: 140px;
+}
 
 .selections{
     width: 200px;

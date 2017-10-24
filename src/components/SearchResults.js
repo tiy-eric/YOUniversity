@@ -183,14 +183,14 @@ class SearchResults extends Component {
                 <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'55'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>
                 <TableHeaderColumn row='0' colSpan='4'>Basic School Info</TableHeaderColumn>
                 <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='size' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                <TableHeaderColumn row='1' dataField='size' dataSort width={'80'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
                 dataFormat={ this.formatFloat }>Size</TableHeaderColumn>
-                <TableHeaderColumn id="state" row='1' dataField='state' dataSort width={"80"} filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
-                <TableHeaderColumn row='0' colSpan='2'>School Cost Information</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='inState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                <TableHeaderColumn id="state" row='1' dataField='state' width={'55'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
+                <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} width={'120'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
+                <TableHeaderColumn className='costInfo' row='0' colSpan='2'>School Cost Information</TableHeaderColumn>
+                <TableHeaderColumn className='costInfo' row='1' dataField='inState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
                 dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='outState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                <TableHeaderColumn className='costInfo' row='1' dataField='outState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
                 dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
               </BootstrapTable>
               <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
