@@ -6,9 +6,9 @@ import { Carousel, Grid, Row, Col, Button } from 'react-bootstrap';
 class Home extends Component {
   render() {
     return (
+        // images for home page auto-scrolling with quotes for inspiration
         <div id="main_carousel" className="carousel-slide row" data-ride="carousel">   
             <Carousel id="carousel-college">
-
             <Carousel.Item className="carousel-image">
                 <img src="https://odysseyonline-img.rbl.ms/simage/https%3A%2F%2Faz616578.vo.msecnd.net%2Ffiles%2F2017%2F02%2F04%2F636218478989693811-1085073741_university-washington-quad-campus-cherry-trees.jpg/2000%2C2000/L0V%2FrbAygwrKpzVt/img.jpg" alt="college campus with pretty trees"/>
                 <Carousel.Caption className="caption">
@@ -28,7 +28,6 @@ class Home extends Component {
                         <h2> - Henry Ford</h2>
                     </div>
                 </Carousel.Caption>
-
             </Carousel.Item>
             <Carousel.Item className="carousel-image">
                 <img src="http://dumontjanks.com/images/projects/carousel/bates/a.jpg" alt="college campus"/>
@@ -100,11 +99,7 @@ class Home extends Component {
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>
-                
-                
             </Carousel>
-
-
 
         <div id="marketing" className="container text-center">
             <Grid>
@@ -131,19 +126,14 @@ class Home extends Component {
                     </Col>
                 </Row>
             </Grid>
-
-                <footer className="footer navbar-fixed-bottom">
-
-                    <div className="preferences">
-                        <h3>&copy; </h3>
-                        <h2 className="heading" display="hidden"> 2017</h2><br />
-                    </div>
-
-                </footer>
+            <footer className="footer navbar-fixed-bottom">
+                <div className="preferences">
+                    <h3>&copy; </h3>
+                    <h2 className="heading" display="hidden"> 2017</h2><br />
+                </div>
+            </footer>
         </div> 
-
     </div>
-     
     );
   }
 }
