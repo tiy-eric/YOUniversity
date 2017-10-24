@@ -141,3 +141,16 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
     padding-right: 70px;
 }
 
+@media only screen and (max-width: 894px){
+    .searchTable {
+        width: 100%;
+        padding-right: 20px;
+    }
+    .favorites{
+        text-align: left;
+    }
+    .heading{
+        text-align: left;
+    }
+
+}
