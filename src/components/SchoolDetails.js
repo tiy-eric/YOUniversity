@@ -63,8 +63,7 @@ componentDidMount() {
       
         return (
 
-          <div className="container">
-            <div className="details-container">
+            <div className="container details-container">
               <Col sm={12} md={12} lg={12} className="details-title">
                 <h1>{college["school.name"]}</h1>
               </Col>
@@ -85,7 +84,7 @@ componentDidMount() {
                 <h2>Student Data</h2>
                 <p>Percentage Women: {Math.round((college["2015.student.demographics.women"])*100)}%</p>
                 <p>Percentage Men: {Math.round((college["2015.student.demographics.men"])*100)}%</p>
-                <p>Average SAT Score: {college["2015.admissions.sat_scores.average.overall"]}</p>
+                <p>Average SAT Score: {(college["2015.admissions.sat_scores.average.overall"]) ? college["2015.admissions.sat_scores.average.overall"] : "Not Available"}</p>
                 <p>Acceptence Rate: {Math.round((college["2015.admissions.admission_rate.overall"])*100)}%</p>
                 <p>Number of Grad Students: {new Intl.NumberFormat().format(college["2015.student.grad_students"])}</p>
                 <p>Retention Rate: {Math.round((college["2015.student.retention_rate.four_year.full_time"])*100)}%</p>
@@ -141,7 +140,6 @@ componentDidMount() {
               </Col>
             </div>
 
-          </div>
         );
       }
 

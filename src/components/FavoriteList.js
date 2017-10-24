@@ -10,7 +10,7 @@ let userListID="";
   
 
 function formatFloat(cell, row) {
-    return parseFloat(cell);
+    return Intl.NumberFormat().format(cell);
 }
 
 class FavoriteList extends Component {
@@ -45,6 +45,14 @@ class FavoriteList extends Component {
         return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
     }
 
+    formatCurrency(cell, row) {
+        return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+    }
+
+    formatAdminRate(cell, row) {
+        return cell + "%"
+    }
+
 
     buttonFormatter = (cell, row) => {
         return <Button id={cell} bsStyle="danger" bsSize="xsmall" onClick={this.deleteFavoriteSchool} >Delete</Button>;
@@ -61,23 +69,21 @@ class FavoriteList extends Component {
         if(this.props.currentUser.schoolList.schools){
             this.data = this.props.currentUser.schoolList.schools.map(
               school => {
-                let temp = parseInt(school.avgNet)
-                let nameLink = school.schoolUrl
       
                 return { 
                   id: school.schoolApiId,
                   favSchoolId: school.id,
                   name: school.schoolName,
-                  netCost: temp,
+                  netCost: school.avgNet,
                   inState: school.inState,
                   outState: school.outState,
                   location: school.schoolLocation,
                   size: school.size,
                   state: school.state,
-                  admission: school.admission,
+                  admission: Math.round(school.admission * 100),
                   highestDegree: school.highestDegree,
                   ownership: school.ownership,
-                  schoolUrl: nameLink
+                  schoolUrl: school.schoolUrl
                 }
               }
             )
@@ -91,21 +97,21 @@ class FavoriteList extends Component {
                 {<TableHeaderColumn row='0' rowSpan='2' dataField='favSchoolId' width={'65'} dataFormat={this.buttonFormatter}></TableHeaderColumn>}
                 {<TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'50'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>}
                 <TableHeaderColumn row='0' colSpan='7'>Basic School Info</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='name' dataSort width={"300"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
+                <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
                 <TableHeaderColumn row='1' dataField='size' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
                 dataFormat={ formatFloat }>Size</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='location' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Location</TableHeaderColumn>
+                <TableHeaderColumn row='1' dataField='location' dataSort width={"100"} filter={ { type: 'TextFilter', delay: 400 } }>Location</TableHeaderColumn>
                 <TableHeaderColumn id="state" row='1' dataField='state' dataSort width={"80"} filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
-                {<TableHeaderColumn row='1' dataField='admission' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Admission %</TableHeaderColumn>}
+                {<TableHeaderColumn row='1' dataField='admission' dataSort filter={ { type: 'TextFilter', delay: 400 } } dataFormat={ this.formatAdminRate }>Admission %</TableHeaderColumn>}
                 <TableHeaderColumn row='1' dataField='highestDegree' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Highest Degree</TableHeaderColumn>
                 <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
                 <TableHeaderColumn row='0' colSpan='3'>School Cost Information</TableHeaderColumn>
                 <TableHeaderColumn row='1' dataField='inState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ formatFloat }>In-State</TableHeaderColumn>
+                dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
                 <TableHeaderColumn row='1' dataField='outState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ formatFloat }>Out-of-State</TableHeaderColumn>
+                dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
                 <TableHeaderColumn row='1' dataField='netCost' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ formatFloat }>Avg Net</TableHeaderColumn>
+                dataFormat={ this.formatCurrency }>Avg Net</TableHeaderColumn>
               </BootstrapTable>
               <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
             </div>
