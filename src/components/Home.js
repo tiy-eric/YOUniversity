@@ -132,7 +132,14 @@ class Home extends Component {
                 </Row>
             </Grid>
 
+                <footer className="footer navbar-fixed-bottom">
 
+                    <div className="preferences">
+                        <h3>&copy; </h3>
+                        <h2 className="heading" display="hidden"> 2017</h2><br />
+                    </div>
+
+                </footer>
         </div> 
 
     </div>
