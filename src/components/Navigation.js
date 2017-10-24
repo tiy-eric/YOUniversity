@@ -21,9 +21,7 @@ class Navigation extends Component {
             < Navbar inverse fixedTop collapseOnSelect className="navWindow">
                 <Navbar.Header>
                 <Navbar.Brand>
-
                         <Link to="/"><h1 className="logostyle">YOU<span className="logoSub">niversity</span></h1></Link>
-
                 </Navbar.Brand>
                 <Navbar.Toggle />
                 </Navbar.Header>
