@@ -9,21 +9,18 @@ let userListID="";
 let userListSize="";
 
 class SearchResults extends Component {
-    data = [];
-    user;
+    data = [];//this will hold all data returned from the api for school search results
+    user;//this will hold all data returned from the api for user information
+    localFavorites = new Array(0);//create blank array to store favorites
 
-    localFavorites = new Array(0);
-
-    componentDidMount(){
-        if(this.props.currentUser){
-            this.user = this.props.currentUser;
-            userListID = this.user.schoolList.id;
-            userListSize = this.user.schoolList.schools.length;
+    componentDidMount(){//run if application loads appropriately
+        if(this.props.currentUser){//if user information is available
+            this.user = this.props.currentUser;//set current user as user
+            userListID = this.user.schoolList.id;//get user list id for api call for favorites
+            userListSize = this.user.schoolList.schools.length;//get current favorites list size
             this.props.getSchools(this.user.preferences.location, this.user.preferences.major)
             this.loadFavorites(this.user.schoolList.schools);
-        }
-        
-        
+        }  
     }
 
     afterTabChanged() {
@@ -40,66 +37,50 @@ class SearchResults extends Component {
 
     loadFavorites(listFromUser) {
         for(let i = 0; i < listFromUser.length; i++)
-        {
-                this.localFavorites[i]=listFromUser[i].schoolName;
-        }
+        {this.localFavorites[i]=listFromUser[i].schoolName;}
     }
     
-        
-
     onRowSelect = (row, isSelected, e, rowIndex) => {
         let rowStr = '';
         let schoolInfo = new School();
         for (const prop in row) {
           rowStr += prop + ': "' + row[prop] + '"';
           switch(prop){
-                    case 'id': {schoolInfo.schoolApiId = row[prop] } break;
-                    case 'name':{schoolInfo.schoolName = row[prop]} break;
-                    case 'netCost':{schoolInfo.avgNet = row[prop]} break;
-                    case 'inState':{schoolInfo.inState = row[prop]} break;
-                    case 'outState':{schoolInfo.outState = row[prop]} break;
-                    case 'location':{schoolInfo.schoolLocation = row[prop]} break;
-                    case 'size':{schoolInfo.size = row[prop]} break;
-                    case 'state':{schoolInfo.state = row[prop]} break;
-                    case 'admission':{schoolInfo.admission = row[prop]} break;
-                    case 'ownership':{schoolInfo.ownership = row[prop]} break;
-                    case 'highestDegree':{schoolInfo.highestDegree = row[prop]} break;
-                    case 'schoolUrl':{schoolInfo.schoolUrl = row[prop]} break;
-                    case 'comment':{schoolInfo.comment = row[prop]} break;
-                    case 'rank':{schoolInfo.rank = row[prop]} break;
-                }
-        }//create school item to pass to add method
+            case 'id': {schoolInfo.schoolApiId = row[prop] } break;
+            case 'name':{schoolInfo.schoolName = row[prop]} break;
+            case 'netCost':{schoolInfo.avgNet = row[prop]} break;
+            case 'inState':{schoolInfo.inState = row[prop]} break;
+            case 'outState':{schoolInfo.outState = row[prop]} break;
+            case 'location':{schoolInfo.schoolLocation = row[prop]} break;
+            case 'size':{schoolInfo.size = row[prop]} break;
+            case 'state':{schoolInfo.state = row[prop]} break;
+            case 'admission':{schoolInfo.admission = row[prop]} break;
+            case 'ownership':{schoolInfo.ownership = row[prop]} break;
+            case 'highestDegree':{schoolInfo.highestDegree = row[prop]} break;
+            case 'schoolUrl':{schoolInfo.schoolUrl = row[prop]} break;
+            case 'comment':{schoolInfo.comment = row[prop]} break;
+            case 'rank':{schoolInfo.rank = row[prop]} break;
+          }
+        }
         this.props.addSchoolToFavoriteList(userListID, schoolInfo);
-        alert (`Congrats ${this.props.currentUser.firstName}! ${schoolInfo.schoolName} has been added to your list!`)
       }
 
       onSelectAll(isSelected, rows) {
-        if (isSelected) {
-            alert('Select All not currently supported, please deselect and select each individual school to add to your Favorites List');
-        } 
+        if (isSelected) {alert('Select All not currently supported, please deselect and select each individual school to add to your Favorites List');} 
     }
 
-    formatFloat(cell, row) {
-        return cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-    }
+    formatFloat(cell, row) {return cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
 
-    formatCurrency(cell, row) {
-        return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-    }
+    formatCurrency(cell, row) {return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
 
     selectRowProp = {
         mode: 'checkbox',
-        // clickToSelect: true, --> use this for favorite list to pull up details. this will allow you to click row to select it.
         onSelect: this.onRowSelect,
         onSelectAll: this.onSelectAll
     };
 
-
     render() {
-        let favorites = this.localFavorites.map(function(value, key){
-            return <li key={key}>{value}</li>;
-        })
-
+        let favorites = this.localFavorites.map(function(value, key){return <li key={key}>{value}</li>;})
         if(this.props.addedSchool){
             console.log(this.props.addedSchool)
             this.props.refreshUser();
@@ -140,7 +121,6 @@ class SearchResults extends Component {
               school => {
                 let temp = parseInt(school['2015.cost.avg_net_price.overall'])
                 let nameLink = school['school.school_url']
-      
                 return { 
                   id: school.id,
                   name: school['school.name'],
@@ -158,58 +138,55 @@ class SearchResults extends Component {
               }
             )
           
-          return (
-              <div className="searchDashboard">
-            
-
-              <footer className="footer navbar-fixed-bottom">
-                  
-                          <div className="preferences">
-                              <h2 className="heading">Your Info </h2><br />
-                              <h3 className="itemTitle">Major: </h3>
-                              <h3 className="item">{this.user.preferences.major}</h3><br />
-                              <h3 className="itemTitle">State(s): </h3>
-                              <h3 className="item">{this.user.preferences.location}</h3>
-                          </div>
-       
-              </footer>
-            <div className="container searchTable">
-                <div className="instructions">
-                <p className="tip"><span className="glyphicon glyphicon-arrow-right"></span>TIP: Click Favorites section heading to open your Favorites List</p>
-                <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Utilize NONE, ONE, or ALL filters below to find your prospective schools</p>
-                <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Click checkbox to add a school to your Favorites List</p>
+        return (
+            <div className="searchDashboard">
+                <footer className="footer navbar-fixed-bottom">
+                    <div className="preferences">
+                        <h2 className="heading">Your Info </h2><br />
+                        <div className="majors">
+                            <h3 className="itemTitle">Major: </h3>
+                            <h3 className="item">{this.user.preferences.major}</h3><br />
+                        </div>
+                        <div className="states">
+                            <h3 className="itemTitle">State(s): </h3>
+                            <h3 className="item">{this.user.preferences.location}</h3>
+                        </div>
+                    </div>
+                </footer>
+                <div className="container searchTable">
+                    <div className="instructions">
+                    <p className="tip"><span className="glyphicon glyphicon-arrow-right"></span>TIP: Click Favorites section heading to open your Favorites List</p>
+                    <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Utilize NONE, ONE, or ALL filters below to find your prospective schools</p>
+                    <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Click checkbox to add a school to your Favorites List</p>
                 </div>
-              <BootstrapTable ref="searchResultTable" data={ this.data } selectRow={ this.selectRowProp } search exportCSV={ true } pagination striped>
-                <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'55'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>
-                <TableHeaderColumn row='0' colSpan='4'>Basic School Info</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='size' dataSort width={'80'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ this.formatFloat }>Size</TableHeaderColumn>
-                <TableHeaderColumn id="state" row='1' dataField='state' width={'55'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} width={'120'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
-                <TableHeaderColumn className='costInfo' row='0' colSpan='2'>School Cost Information</TableHeaderColumn>
-                <TableHeaderColumn className='costInfo' row='1' dataField='inState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
-                <TableHeaderColumn className='costInfo' row='1' dataField='outState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
-              </BootstrapTable>
-              <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
+                <BootstrapTable ref="searchResultTable" data={ this.data } selectRow={ this.selectRowProp } search exportCSV={ true } pagination striped>
+                    <TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'55'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>
+                    <TableHeaderColumn row='0' colSpan='4'>Basic School Info</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='size' dataSort width={'80'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatFloat }>Size</TableHeaderColumn>
+                    <TableHeaderColumn id="state" row='1' dataField='state' width={'55'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} width={'120'} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
+                    <TableHeaderColumn className='costInfo' row='0' colSpan='2'>School Cost Information</TableHeaderColumn>
+                    <TableHeaderColumn className='costInfo' row='1' dataField='inState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
+                    <TableHeaderColumn className='costInfo' row='1' dataField='outState' width={'90'} dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
+                </BootstrapTable>
+                <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
             </div>
-            <a href="/favoritelist" className="favoriteLink">
-                <div className="favorites" href="/favoriteList">
-            <h2 className="heading">Your Favorites</h2><br />
-            <ol className = "faveList">
-              {favorites}
-            </ol>
+                <a href="/favoritelist" className="favoriteLink">
+                    <div className="favorites" href="/favoriteList">
+                        <h2 className="favoriteHeading">Your Favorites</h2><br />
+                        <ol className = "faveList">
+                            {favorites}
+                        </ol>
+                    </div>
+                </a>
             </div>
-            </a>
-            </div>
-            
-      
           );
         }
         return (<div>loading...</div>) 
     }
 }
-
 export default SearchResults;

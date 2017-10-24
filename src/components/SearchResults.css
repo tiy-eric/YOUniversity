@@ -56,6 +56,16 @@
     font-family: 'Graduate';
     text-align: center;
 }
+.favoriteHeading {
+    font-family: 'Graduate';
+    text-align: center;
+}
+.favoriteHeading a {
+    font-family: 'Graduate';
+    text-align: center;
+    color:black;
+}
+
 
 .heading a {
     font-family: 'Graduate';
@@ -140,6 +150,9 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
     color: #f6cc45;
     padding-right: 70px;
 }
+.searchDashboard{
+    margin-bottom: 150px;
+}
 
 @media only screen and (max-width: 894px){
     .searchTable {
@@ -148,9 +161,17 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
     }
     .favorites{
         text-align: left;
-    }
-    .heading{
-        text-align: left;
+        width: 100%;
+        padding-left: 15px;
     }
 
+    /* .preferences {
+        flex-flow: row nowrap;
+        display: flex;
+        padding-left: 15px;
+    } */
+    /* .item{
+        padding-top: 0px;
+        padding-left: 60px;
+    } */
 }
