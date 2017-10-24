@@ -8,7 +8,7 @@ import "./FavoriteList.css"
 
 let userListID="";
   
-
+// function to format floats in table display
 function formatFloat(cell, row) {
     return Intl.NumberFormat().format(cell);
 }
@@ -17,6 +17,7 @@ class FavoriteList extends Component {
     data = [];
     user;
 
+    // on component mount, and currentUser available, lets initialize user and ID for schoolList (to be used for delete school)
     componentDidMount(){
         if(this.props.currentUser.id){
             this.user = this.props.currentUser;
@@ -25,48 +26,51 @@ class FavoriteList extends Component {
         
     }
 
+    // method to delete school from Favorites list
     deleteFavoriteSchool = (event) => {
-        // event.preventDefault ();
         let schoolToDelete = event.target.id
-        console.log(schoolToDelete)
-        console.log(userListID)
-
+        // need to send the ListID and the schoolID for the school we wish to delete
         this.props.deleteSchoolFromFavoriteList(userListID, schoolToDelete);
 
     }
     
-    
-
+    // formatting for link to external school url
     linkFormatter(cell, row) {
         return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';
     }
 
+    // formatting for link to internal school details page
     internalLinkFormatter(cell, row) {
         return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
     }
 
+    // formatting for currency fields on table
     formatCurrency(cell, row) {
         return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
     }
 
+    // formatting for admission rate percentage field on table
     formatAdminRate(cell, row) {
         return cell + "%"
     }
 
-
+    // formatting for delete button on table
     buttonFormatter = (cell, row) => {
         return <Button id={cell} bsStyle="danger" bsSize="xsmall" onClick={this.deleteFavoriteSchool} >Delete</Button>;
     }
 
     render() {
      
+        // if state has been updated with deletedSchool, we need to refresh our currentUser info
         if(this.props.deletedSchool){
             this.props.refreshUser();
             this.user = this.props.currentUser;
             userListID = this.user.schoolList.id;
         }
 
+        // only step into our render logic if we have a schoolList on our currentUser
         if(this.props.currentUser.schoolList.schools){
+            // let's use an arrow function to map schoolList.schools to this.data for our table
             this.data = this.props.currentUser.schoolList.schools.map(
               school => {
       
@@ -89,9 +93,10 @@ class FavoriteList extends Component {
             )
           
       
-          // return inside the if
+          // return inside the if (schoolList) logic
           return (
             
+            // fancy React-Bootstrap table
             <div className="container favoriteTable">
               <BootstrapTable data={ this.data } search exportCSV={ true } pagination striped>
                 {<TableHeaderColumn row='0' rowSpan='2' dataField='favSchoolId' width={'65'} dataFormat={this.buttonFormatter}></TableHeaderColumn>}

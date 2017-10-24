@@ -4,17 +4,20 @@ import "./SchoolDetails.css";
 
 class SchoolDetails extends Component {
 
-componentDidMount() {
-    // let schoolid = this.props.params.id
-    let schoolid = 236939
-    if (this.props.params.id) {
-        schoolid = this.props.params.id
-    }
-  
-    this.props.schoolDetails(schoolid)
-}
+  //  when component mounts, we need to pull school ID from props and run schoolDetails from Action file
+  componentDidMount() {
+      let schoolid = 236939
+      if (this.props.params.id) {
+          schoolid = this.props.params.id
+      }
+    
+      this.props.schoolDetails(schoolid)
+  }
 
   render() {
+
+    //  a bunch of constant methods to map codes to strings for display purposes
+
     const getDegree = {
         0: 'Non-Degree-Granting',
         1: 'Certificate',
@@ -57,17 +60,21 @@ componentDidMount() {
       
       // if we have schooldetails data we are ready to render details page
       if(this.props.currentSchool){
-        console.log(this.props.currentSchool)
+        // grab currentSchool out of props, which came from API call in schoolDetails, and store in college variable
         let college = this.props.currentSchool[0];
+        // set url for external college website link
         let schoolURL = 'http://'+college["school.school_url"]
       
         return (
 
+            //  container to hold all school details cards
             <div className="container details-container">
+              {/* header for the school details page */}
               <Col sm={12} md={12} lg={12} className="details-title">
                 <h1>{college["school.name"]}</h1>
               </Col>
 
+              {/* details card to display School Summary data */}
               <Col sm={12} md={6} lg={6} className="details-summary details-card">
                 <h2>School Summary</h2>
                 <p>Website URL: <a href={schoolURL} target="_blank">{college["school.school_url"]}</a></p>
@@ -80,6 +87,7 @@ componentDidMount() {
                 <p>Locale Description:  {getLocale[college["school.locale"]]}</p>
               </Col>
 
+              {/* details card to display Student Data data */}
               <Col sm={12} md={6} lg={6} className="student-data details-card">
                 <h2>Student Data</h2>
                 <p>Undergraduate Enrollement:  {new Intl.NumberFormat().format(college["2015.student.size"])}</p>
@@ -92,6 +100,7 @@ componentDidMount() {
                 <p>Median Family Income: ${new Intl.NumberFormat().format(college["2015.student.demographics.median_family_income"])}</p>
               </Col>
 
+              {/* details card to display Financial Data */}
               <Col sm={12} md={6} lg={6} className="financial-data details-card">
                 <h2>Financial Data</h2>
                 <p>Tuition In-State: ${new Intl.NumberFormat().format(college["2015.cost.tuition.in_state"])}</p>
@@ -103,6 +112,7 @@ componentDidMount() {
                 <p>Percentage of Students with Pell Grants: {Math.round((college["2015.aid.pell_grant_rate"])*100)}%</p>
               </Col>
 
+              {/* details card to display table of Net Price by Family Income break-down */}
               <Col sm={12} md={6} lg={6} className="financial-breakdown details-card">
                 <h2>Net Price by Family Income</h2>
                 <div className="table-container">
