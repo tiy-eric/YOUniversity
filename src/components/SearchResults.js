@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 import { School } from '../models/School'
 import './SearchResults.css';
 
+import SchoolDetailsContainer  from "../containers/SchoolDetails";
+
 let userListID="";
 let userListSize="";
 
@@ -22,6 +24,8 @@ class SearchResults extends Component {
     localFavorites = new Array(0);
 
     componentDidMount(){
+        this.props.showSchoolDetails = false;
+        this.props.selectedSchoolID =236939;
         if(this.props.currentUser.id){
             this.user = this.props.currentUser;
             // console.log(user);
@@ -44,9 +48,14 @@ class SearchResults extends Component {
         return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';
     }
 
-    internalLinkFormatter(cell, row) {
-        //console.log(cell)
-        return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
+    internalLinkFormatter = (cell, row) => {
+        return <a id={cell} onClick={this.showModal} href="#" target="_blank">Details</a>
+    }
+
+    showModal = event => {
+        event.preventDefault()
+        this.props.selectedSchoolID = event.target.id;
+        this.props.showSchoolDetails = true;
     }
 
     loadFavorites(listFromUser) {
@@ -128,6 +137,8 @@ class SearchResults extends Component {
 
 
     render() {
+
+
         let favorites = this.localFavorites.map(function(value, key){
             return <li key={key}>{value}</li>;
         })
@@ -232,7 +243,10 @@ class SearchResults extends Component {
             </ol>
    
             </div>
+                <SchoolDetailsContainer selectedSchoolID={this.props.selectedSchoolID} show={this.props.showSchoolDetails} />
             </div>
+
+            
       
           );
         }
