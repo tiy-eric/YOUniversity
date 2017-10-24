@@ -1,28 +1,6 @@
-.details-container {
-    background-color: rgb(230, 223, 223)
-}
 
-.details-title {
-    text-align: center;
-    background-color: rgb(230, 223, 223)
-}
-
-.details-card {
-    height: 400px;
-    text-align: center;
-    background-color: rgb(230, 223, 223)
-}
-
-.details-card p {
-    font-size: 130%
-}
-
-.table-container {
-    width: 100%;
-    display: flex;
-    justify-content: center; 
-}
 
 .favoriteTable {
-    margin-top: 75px;
+    margin-top: 150px;
+    width: 90%
 }
