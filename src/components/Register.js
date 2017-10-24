@@ -59,7 +59,6 @@ class Register extends Component {
                 case "location":
                     var value = "";
                     for (var i = 0; i < input.length; i++) {
-                        console.log(input.length)
                         if (input[i].selected) {
                         value += input[i].value + ","
                         }
@@ -95,7 +94,7 @@ class Register extends Component {
     if(this.props.registeredUser){
         let newUser = this.props.registeredUser;
         return (
-            <div className="container">
+            <div className="container confirmation">
                 <Panel header="Welcome to YOUniversity!">
                     <h4>Welcome {newUser.firstName}! You registered successfully!</h4>
                     <p>Please login with your email and password to get started</p>

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Crimson+Text|Graduate');
 
 .details-container {
-    background-color: rgb(230, 223, 223)
+    background-color: rgb(230, 223, 223);
 }
 
 .details-title {
@@ -55,6 +55,7 @@
     margin: 0;
     padding: 0;
     padding-left: 20px;
+    margin-top: 70px;
 }
 .favorites {
     flex-flow: column nowrap;
@@ -133,3 +134,33 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
     margin-bottom: 30px;
     margin-top: -40px;
 }
+
+
+@media all and (max-width: 1199px) {
+    .preferences {margin-top: 140px;}
+
+    }
+
+@media all and (max-width: 895px) {
+    .searchTable {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 70px;
+    }
+    .favorites {
+        margin: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 100%;
+    }
+
+    .heading {
+        text-align: left;
+    }
+    }
+
+
+@media only screen and (min-width: 768px), screen and (max-width: 868px){
+    
+    }
