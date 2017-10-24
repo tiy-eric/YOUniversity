@@ -26,27 +26,14 @@
 }
 
 .searchDashboard {
-    
     width: 100%;
     flex-flow: row nowrap;
     padding: 0;
-    margin: 0;
+    margin: 70px 0;
     align-content: center;
 }
 
-.preferences {
-    flex-flow: row nowrap;
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-    width: 100%;
-    margin-top: 50px;
-    /* background-color: rgb(158, 204, 198); */
-    background-color: #222;
-    /* color: #9d9d9d; */
-    color: #f6cc45;
-    padding-right: 70px;
-}
+
 
 .searchTable {
     flex-flow: column nowrap;
@@ -81,10 +68,10 @@
 }
 
 .itemTitle {
-line-height: 24px;
-margin-left: 60px;
-padding-top: 7px;
-font-family: 'Graduate', serif;
+    line-height: 24px;
+    margin-left: 60px;
+    padding-top: 7px;
+    font-family: 'Graduate', serif;
 }
 
 .item {
@@ -136,31 +123,21 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
 }
 
 
-@media all and (max-width: 1199px) {
-    .preferences {margin-top: 140px;}
+.footer {
+    width: 100%;
+    background-color: #222;
+    color: #f6cc45;
+    padding-bottom: 5px;
+}
 
-    }
+.preferences {
+    flex-flow: row nowrap;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    width: 100%;
+    background-color: #222;
+    color: #f6cc45;
+    padding-right: 70px;
+}
 
-@media all and (max-width: 895px) {
-    .searchTable {
-        width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
-        margin-top: 70px;
-    }
-    .favorites {
-        margin: 0;
-        padding-left: 15px;
-        padding-right: 15px;
-        width: 100%;
-    }
-
-    .heading {
-        text-align: left;
-    }
-    }
-
-
-@media only screen and (min-width: 768px), screen and (max-width: 868px){
-    
-    }

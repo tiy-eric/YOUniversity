@@ -160,13 +160,19 @@ class SearchResults extends Component {
           
           return (
               <div className="searchDashboard">
-              <div className="preferences">
-                  <h2 className="heading">Your Info </h2><br />
-                  <h3 className="itemTitle">Major: </h3>
-                  <h3 className="item">{this.user.preferences.major}</h3><br />
-                  <h3 className="itemTitle">State(s): </h3>
-                  <h3 className="item">{this.user.preferences.location}</h3>
-                  </div>
+            
+
+              <footer className="footer navbar-fixed-bottom">
+                  
+                          <div className="preferences">
+                              <h2 className="heading">Your Info </h2><br />
+                              <h3 className="itemTitle">Major: </h3>
+                              <h3 className="item">{this.user.preferences.major}</h3><br />
+                              <h3 className="itemTitle">State(s): </h3>
+                              <h3 className="item">{this.user.preferences.location}</h3>
+                          </div>
+       
+              </footer>
             <div className="container searchTable">
                 <div className="instructions">
                 <p className="tip"><span className="glyphicon glyphicon-arrow-right"></span>TIP: Click Favorites section heading to open your Favorites List</p>
@@ -198,6 +204,7 @@ class SearchResults extends Component {
             </div>
             </a>
             </div>
+            
       
           );
         }
