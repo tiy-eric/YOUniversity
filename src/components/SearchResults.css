@@ -163,4 +163,10 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
         width: 100%;
         padding-left: 15px;
     }
+    .tip{
+        font-size: 12px;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding: 0;
+    }
 }

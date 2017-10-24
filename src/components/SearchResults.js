@@ -156,7 +156,7 @@ class SearchResults extends Component {
                 <div className="container searchTable">
                     <div className="instructions">
                     <p className="tip"><span className="glyphicon glyphicon-arrow-right"></span>TIP: Click Favorites section heading to open your Favorites List</p>
-                    <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Utilize NONE, ONE, or ALL filters below to find your prospective schools</p>
+                    <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Utilize NONE, ONE, or ALL filters below to find prospective schools</p>
                     <p className="tip"><span className="glyphicon glyphicon-arrow-down"></span>TIP: Click checkbox to add a school to your Favorites List</p>
                 </div>
                 <BootstrapTable ref="searchResultTable" data={ this.data } selectRow={ this.selectRowProp } search exportCSV={ true } pagination striped>
