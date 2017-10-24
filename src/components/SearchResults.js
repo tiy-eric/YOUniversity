@@ -198,7 +198,7 @@ class SearchResults extends Component {
             <a href="/favoritelist" className="favoriteLink">
                 <div className="favorites" href="/favoriteList">
             <h2 className="heading">Your Favorites</h2><br />
-            <ol className = "topTen">
+            <ol className = "faveList">
               {favorites}
             </ol>
             </div>
