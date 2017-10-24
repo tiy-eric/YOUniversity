@@ -124,14 +124,12 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
 .favoriteLink:hover{
     color:#222;
     text-decoration:none;
-    
 }
 
 .instructions{
     margin-bottom: 30px;
     margin-top: -40px;
 }
-
 
 .footer {
     width: 100%;
@@ -150,6 +148,7 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
     color: #f6cc45;
     padding-right: 70px;
 }
+
 .searchDashboard{
     margin-bottom: 150px;
 }
@@ -164,14 +163,4 @@ button.btn.btn-success.react-bs-table-csv-btn.hidden-print:hover {
         width: 100%;
         padding-left: 15px;
     }
-
-    /* .preferences {
-        flex-flow: row nowrap;
-        display: flex;
-        padding-left: 15px;
-    } */
-    /* .item{
-        padding-top: 0px;
-        padding-left: 60px;
-    } */
 }
