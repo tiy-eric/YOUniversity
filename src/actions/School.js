@@ -1,7 +1,7 @@
 import request from 'superagent';
 
 const baseUrl = 'https://api.data.gov/ed/collegescorecard/v1/schools.json?';
-const fields = "&_fields=id,school.name,school.state,2015.cost.avg_net_price.overall,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state,2015.cost.tuition.program_year,school.state_fips,school.locale,school.degrees_awarded.predominant,school.degrees_awarded.highest,2015.cost.attendance.academic_year,2015.student.size,2015.academics.program_available.bachelors,2015.academics.program_available.assoc,2015.admissions.admission_rate.overall,school.ownership,school.school_url"
+const fields = "&_fields=id,school.name,school.state,2015.cost.avg_net_price.overall,2015.student.grad_students,2015.cost.tuition.in_state,2015.cost.tuition.out_of_state,2015.cost.tuition.program_year,school.state_fips,school.locale,school.degrees_awarded.predominant,school.degrees_awarded.highest,2015.cost.attendance.academic_year,2015.student.size,2015.academics.program_available.bachelors,2015.academics.program_available.assoc,2015.admissions.admission_rate.overall,school.ownership,school.school_url"
 const sortItems  = "&sort=2015.cost.avg_net_price.overall:desc";
 const perPage = "&_per_page=100";
 

@@ -148,7 +148,7 @@ class SearchResults extends Component {
                   inState: school["2015.cost.tuition.in_state"],
                   outState: school["2015.cost.tuition.out_of_state"],
                   location: getLocale[school["school.locale"]],
-                  size: school["2015.student.size"],
+                  size: school["2015.student.size"] + school["2015.student.grad_students"],
                   state: school["school.state"],
                   admission: school["2015.admissions.admission_rate.overall"],
                   highestDegree: getDegree[school["school.degrees_awarded.highest"]],
