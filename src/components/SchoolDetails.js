@@ -73,20 +73,20 @@ componentDidMount() {
                 <p>Website URL: <a href={schoolURL} target="_blank">{college["school.school_url"]}</a></p>
                 <p>State:  {college["school.state"]}</p>
                 <p>City:  {college["school.city"]}</p>
-                <p>School size (Enrollement):  {new Intl.NumberFormat().format(college["2015.student.size"])}</p>
                 <p>Highest Degree Offered:  {getDegree[college["school.degrees_awarded.highest"]]}</p>
                 <p>Predominant Degree Offered:  {getPredominant[college["school.degrees_awarded.predominant"]]}</p>
+                <p>Acceptence Rate: {Math.round((college["2015.admissions.admission_rate.overall"])*100)}%</p>
                 <p>Institution Type:  {getOwnership[college["school.ownership"]]}</p>
                 <p>Locale Description:  {getLocale[college["school.locale"]]}</p>
               </Col>
 
               <Col sm={12} md={6} lg={6} className="student-data details-card">
                 <h2>Student Data</h2>
+                <p>Undergraduate Enrollement:  {new Intl.NumberFormat().format(college["2015.student.size"])}</p>
+                <p>Number of Grad Students: {new Intl.NumberFormat().format(college["2015.student.grad_students"])}</p>
                 <p>Percentage Women: {Math.round((college["2015.student.demographics.women"])*100)}%</p>
                 <p>Percentage Men: {Math.round((college["2015.student.demographics.men"])*100)}%</p>
                 <p>Average SAT Score: {(college["2015.admissions.sat_scores.average.overall"]) ? college["2015.admissions.sat_scores.average.overall"] : "Not Available"}</p>
-                <p>Acceptence Rate: {Math.round((college["2015.admissions.admission_rate.overall"])*100)}%</p>
-                <p>Number of Grad Students: {new Intl.NumberFormat().format(college["2015.student.grad_students"])}</p>
                 <p>Retention Rate: {Math.round((college["2015.student.retention_rate.four_year.full_time"])*100)}%</p>
                 <p>Completion Rate: {Math.round((college["2015.completion.completion_rate_4yr_150nt"])*100)}%</p>
                 <p>Median Family Income: ${new Intl.NumberFormat().format(college["2015.student.demographics.median_family_income"])}</p>
