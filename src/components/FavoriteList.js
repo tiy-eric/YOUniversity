@@ -113,6 +113,16 @@ class FavoriteList extends Component {
                 <TableHeaderColumn row='1' dataField='netCost' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
                 dataFormat={ this.formatCurrency }>Avg Net</TableHeaderColumn>
               </BootstrapTable>
+
+
+              <footer className="footer navbar-fixed-bottom">
+
+                  <div className="preferences">
+                      <h3>&copy; </h3>
+                      <h2 className="heading" display="hidden"> 2017</h2><br />
+                  </div>
+
+              </footer>
               <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
             </div>
       
