@@ -37,15 +37,15 @@ class NavLogin extends Component {
   
           return (
               <div>
-                <Navbar.Brand>
+                <Navbar.Text>
                       <Link className="navh4" to="/searchresults">Search Results</Link>
-                </Navbar.Brand>
-                <Navbar.Brand>
+                </Navbar.Text>
+                <Navbar.Text>
                       <Link className="navh4" to="/edituser">Edit Preferences</Link>
-                </Navbar.Brand>
-                <Navbar.Brand>
+                </Navbar.Text>
+                <Navbar.Text>
                       <Link className="navh4" to="/favoritelist">Favorites</Link>
-                </Navbar.Brand>
+                </Navbar.Text>
                 <Navbar.Text pullRight className="signedin">
                       Signed in as: {user.firstName} {user.lastName}<Navbar.Link onClick={this.logoutUser} href="#" className="logoutlink">(Logout)</Navbar.Link>
                 </Navbar.Text>

@@ -8,14 +8,6 @@ import './SearchResults.css';
 let userListID="";
 let userListSize="";
 
-  
-  
-
-
-
-
-
-
 class SearchResults extends Component {
     data = [];
     user;
@@ -25,10 +17,8 @@ class SearchResults extends Component {
     componentDidMount(){
         if(this.props.currentUser){
             this.user = this.props.currentUser;
-            // console.log(user);
             userListID = this.user.schoolList.id;
             userListSize = this.user.schoolList.schools.length;
-            // console.log(`list id ${userListID} and list size ${userListSize}`)
             this.props.getSchools(this.user.preferences.location, this.user.preferences.major)
             this.loadFavorites(this.user.schoolList.schools);
         }
@@ -41,32 +31,18 @@ class SearchResults extends Component {
     }
 
     linkFormatter(cell, row) {
-        //console.log(cell)
         return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';
     }
 
     internalLinkFormatter(cell, row) {
-        //console.log(cell)
         return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
     }
 
     loadFavorites(listFromUser) {
-        // console.log("items sent to method")
-        // console.log(listFromUser);
-        //let sizeCheck = this.localFavorites.length-listFromUser.length;
-        // console.log(sizeCheck);
         for(let i = 0; i < listFromUser.length; i++)
         {
                 this.localFavorites[i]=listFromUser[i].schoolName;
         }
-        // if(sizeCheck>0){
-        //     for(let j=0; j < sizeCheck; j++)
-        //     {
-        //         this.localFavorites[j+listFromUser.length] = "Favorite Not Assigned"
-        //     }
-        // }
-        console.log(this.localFavorites)
-        
     }
     
         
@@ -74,11 +50,9 @@ class SearchResults extends Component {
     onRowSelect = (row, isSelected, e, rowIndex) => {
         let rowStr = '';
         let schoolInfo = new School();
-        
         for (const prop in row) {
           rowStr += prop + ': "' + row[prop] + '"';
           switch(prop){
-            
                     case 'id': {schoolInfo.schoolApiId = row[prop] } break;
                     case 'name':{schoolInfo.schoolName = row[prop]} break;
                     case 'netCost':{schoolInfo.avgNet = row[prop]} break;
@@ -96,24 +70,17 @@ class SearchResults extends Component {
                 }
         }//create school item to pass to add method
         this.props.addSchoolToFavoriteList(userListID, schoolInfo);
-        
         alert (`Congrats ${this.props.currentUser.firstName}! ${schoolInfo.schoolName} has been added to your list!`)
-        //isolate user name
-        console.log(this.user);
-        
-        //update favorites list on favorites snapshot
       }
 
       onSelectAll(isSelected, rows) {
         if (isSelected) {
             alert('Select All not currently supported, please deselect and select each individual school to add to your Favorites List');
         } 
-       
     }
 
     formatFloat(cell, row) {
         return cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-
     }
 
     formatCurrency(cell, row) {
@@ -132,7 +99,6 @@ class SearchResults extends Component {
         let favorites = this.localFavorites.map(function(value, key){
             return <li key={key}>{value}</li>;
         })
-        console.log(favorites)
 
         if(this.props.addedSchool){
             console.log(this.props.addedSchool)
@@ -140,7 +106,6 @@ class SearchResults extends Component {
             this.loadFavorites(this.props.addedSchool.schools);
         }
             
-        
         const getDegree = {
             0: 'Non-Degree-Granting',
             1: 'Certificate',
@@ -193,7 +158,6 @@ class SearchResults extends Component {
               }
             )
           
-      
           return (
               <div className="searchDashboard">
               <div className="preferences">
@@ -228,21 +192,16 @@ class SearchResults extends Component {
             <a href="/favoritelist" className="favoriteLink">
                 <div className="favorites" href="/favoriteList">
             <h2 className="heading">Your Favorites</h2><br />
-
             <ol className = "topTen">
               {favorites}
             </ol>
-            
             </div>
             </a>
             </div>
       
           );
         }
-      
-        //return outside the if for when we are waiting for the data
-        return (<div>loading...</div>)
-        
+        return (<div>loading...</div>) 
     }
 }
 
