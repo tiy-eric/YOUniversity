@@ -1,6 +1,18 @@
 
 
 .favoriteTable {
-    margin-top: 150px;
+    margin-top: 80px;
     width: 90%
+}
+
+select.number-filter-comparator.form-control {
+    max-width: 36px;
+}
+
+input.number-filter-input.form-control{
+    min-width: 70px;
+}
+
+.faveTitle {
+    margin-bottom: 50px;
 }
