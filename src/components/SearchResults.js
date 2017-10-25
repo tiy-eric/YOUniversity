@@ -24,8 +24,8 @@ class SearchResults extends Component {
     localFavorites = new Array(0);
 
     componentDidMount(){
-        this.props.showSchoolDetails = false;
-        this.props.selectedSchoolID =236939;
+        // this.props.showSchoolDetails = false;
+        // this.props.selectedSchoolID =236939;
         if(this.props.currentUser.id){
             this.user = this.props.currentUser;
             // console.log(user);
@@ -243,7 +243,7 @@ class SearchResults extends Component {
             </ol>
    
             </div>
-                <SchoolDetailsContainer selectedSchoolID={this.props.selectedSchoolID} show={this.props.showSchoolDetails} />
+                <SchoolDetailsContainer selectedSchoolID={236939} show={true} />
             </div>
 
             
