@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const user = (state = {}, action) => {
     
-    state = {currentUser: JSON.parse(localStorage.getItem("currentUser")) || {} };
+    state = {currentUser: JSON.parse(localStorage.getItem("currentUser"))};
     
     const newState = _.merge({}, state)
 
@@ -14,13 +14,18 @@ const user = (state = {}, action) => {
             newState.updatedUser = action.result;
             return newState;
         case "USER_LOGIN":
-            newState.updatedUser = action.result;
+            newState.currentUser = action.result;
             return newState;
         case "USER_LOGOUT":
             newState.updatedUser = action.result;
             return newState;
         case "USER_REFRESHED":
             newState.refreshUser = action.result;
+            // newState.schoolList = action.result;
+            //may need to create new element to state for this but technically updating the user so may try to use existing state tool
+            return newState;
+        case "FAVORITE_DELETED":
+            newState.deletedSchool = action.result;
             // newState.schoolList = action.result;
             //may need to create new element to state for this but technically updating the user so may try to use existing state tool
             return newState;

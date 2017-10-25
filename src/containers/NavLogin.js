@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { login, logout } from '../actions/User'
 
 import NavLogin from '../components/NavLogin'
+import "../components/Navigation.css"
 
 const mapStateToProps = state => {
   return {
@@ -12,7 +13,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     login: (user) => {
-      dispatch(login(user))
+     return dispatch(login(user))
     },
     logout: () => {
       dispatch(logout())

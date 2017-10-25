@@ -1,72 +1,121 @@
-#newuser {
-    display: grid;
-    padding: 1em;
-    background: #9eccc6;
-    border: 1px solid #c1c1c1;
-    margin: 2rem auto 0 auto;
-    max-width: 600px;
-    padding: 1em;
+
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text|Graduate');
+
+
+.logostyle {
+    color: #f6cc45;
+    font-size: 30px;
+    line-height: 40px;
+    display: inline;
+    margin-right: 30px;
+    padding: 3px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: 'Graduate', cursive;
 }
 
-#edituser {
-    display: grid;
-    padding: 1em;
-    background: #9eccc6;
-    border: 1px solid #c1c1c1;
-    margin: 2rem auto 0 auto;
-    max-width: 600px;
-    padding: 1em;
+.logoSub {
+    font-size: 22px;
+    font-family: 'Graduate', serif;
 }
 
-form input {
-    background: #fff;
-    border: 1px solid #9c9c9c;
-    width: 100%;
+nav.navbar.navbar-inverse.navbar-fixed-top {
+    line-height: 40px;
 }
 
-
-#submit {
-    background: #47558b;
-    padding: 0.7em;
-    width: 100%;
-    border: 0;
-    color: white;
-    margin-top: 20px;
+.navh1 {
+    color: #f6cc45;
+    font-size: 20px;
+    display: inline;
 }
 
-#submit:hover {
-    background: #427982;
+.navh4 {
+    font-size: 15px;
+    display: inline; 
+    font-family: 'Graduate', cursive;
+    margin-right: 20px;
+    margin-left: 20px;
+
 }
 
-label {
-    /* padding: 0.5em 0.5em 0.5em 0; */
-    margin: 0 0 0 4px;
-    padding: 0;
+.signedin {
+    font-size: 10px;
+    display: inline;
+    font-family: 'Graduate', cursive;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
-input {
-    padding: 0px;
-    margin-bottom: 0px;
-    width: 100%;
+.logoutlink {
+    margin-left: 20px;
+    font-size: 10px;
+    padding-bottom: 5px;
+    display: inline;
+    font-family: 'Graduate', cursive;
+
 }
 
-input:focus {
-    outline: 3px solid yellow;
-    width: 100%;
+.navlink {
+    font-size: 15px;
+    display: inline;
 }
-
-.form-group {
-    margin: 0 0 0 4px;
-}
-
-
-
-.selections{
-    width: 200px;
-}
-
 
 h4 {
     margin-top: 15px;
     margin-bottom: 5px;
+ 
 }
+
+.linkText{
+    font-family: 'Graduate', serif;
+
+}
+
+.navWindow{
+    background-color:#222;
+    border-color: #222;
+}
+
+.navbar-header {
+    height: 70px;
+}
+
+
+
+@media only screen and (max-width: 1200px) {
+    .navh4 {
+        margin-top: 10px;
+    }
+
+}
+@media only screen and (min-width: 1200px) {
+    .navh4 {
+        margin-top: 10px;
+    }
+}
+@media only screen and (max-width: 1320px) {
+    .navh4 {
+        margin-top: 10px;
+    }
+        /* .signedin {
+            display: none;
+        } */
+
+}
+
+@media only screen and (max-width: 1093px) {
+    .navh4 {
+        margin-top: 10px;
+    }
+    .signedin {
+        display: none;
+    }
+ 
+}
+
+@media only screen and (max-width: 669px) {
+    .heading {
+        display: none;
+    }
+}
+

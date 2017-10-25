@@ -1,28 +1,18 @@
-.details-container {
-    background-color: rgb(230, 223, 223)
-}
 
-.details-title {
-    text-align: center;
-    background-color: rgb(230, 223, 223)
-}
-
-.details-card {
-    height: 400px;
-    text-align: center;
-    background-color: rgb(230, 223, 223)
-}
-
-.details-card p {
-    font-size: 130%
-}
-
-.table-container {
-    width: 100%;
-    display: flex;
-    justify-content: center; 
-}
 
 .favoriteTable {
-    margin-top: 75px;
+    margin-top: 80px;
+    width: 90%
+}
+
+select.number-filter-comparator.form-control {
+    max-width: 36px;
+}
+
+input.number-filter-input.form-control{
+    min-width: 70px;
+}
+
+.faveTitle {
+    margin-bottom: 50px;
 }

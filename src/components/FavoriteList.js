@@ -1,170 +1,126 @@
-// import React, { Component } from 'react';
-// import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-// import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
-// import { Link } from 'react-router';
-// import { School } from '../models/School'
-// import "./FavoriteList.css"
+import React, { Component } from 'react';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { Button } from 'react-bootstrap';
+import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
+import { Link } from 'react-router';
+import { School } from '../models/School'
+import "./FavoriteList.css"
 
-// function onRowSelect(row, isSelected, e, rowIndex) {
-//     let rowStr = '';
-//     let schoolInfo = new School();
-    
-//     for (const prop in row) {
-//       rowStr += prop + ': "' + row[prop] + '"';
-//       switch(prop){
-        
-//                 case 'id': {schoolInfo.schoolApiId = row[prop] } break;
-//                 case 'name':{schoolInfo.schoolName = row[prop]} break;
-//                 case 'netCost':{schoolInfo.avgNet = row[prop]} break;
-//                 case 'inState':{schoolInfo.inState = row[prop]} break;
-//                 case 'outState':{schoolInfo.outState = row[prop]} break;
-//                 case 'location':{schoolInfo.schoolLocation = row[prop]} break;
-//                 case 'size':{schoolInfo.size = row[prop]} break;
-//                 case 'state':{schoolInfo.state = row[prop]} break;
-//                 case 'admission':{schoolInfo.admission = row[prop]} break;
-//                 case 'ownership':{schoolInfo.ownership = row[prop]} break;
-//                 case 'highestDegree':{schoolInfo.highestDegree = row[prop]} break;
-//                 case 'schoolUrl':{schoolInfo.schoolUrl = row[prop]} break;
-//                 case 'comment':{schoolInfo.comment = row[prop]} break;
-//                 case 'rank':{schoolInfo.rank = row[prop]} break;
-//             }
-//     }
-    
-//   }
+let userListID="";
   
-  
-// function onSelectAll(isSelected, rows) {
-//     alert(`is select all: ${isSelected}`);
-//     if (isSelected) {
-//         alert('Current display and selected data: ');
-//     } else {
-//         alert('unselect rows: ');
-//     }
-//     for (let i = 0; i < rows.length; i++) {
-//         alert(rows[i].id);
-//     }
-// }
+// function to format floats in table display
+function formatFloat(cell, row) {
+    return Intl.NumberFormat().format(cell);
+}
 
-// const selectRowProp = {
-//     mode: 'checkbox',
-//     // clickToSelect: true, --> use this for favorite list to pull up details. this will allow you to click row to select it.
-//     onSelect: onRowSelect,
-//     onSelectAll: onSelectAll
-// };
+class FavoriteList extends Component {
+    data = [];
+    user;
 
-// function formatFloat(cell, row) {
-//     return parseFloat(cell);
-// }
+    // on component mount, and currentUser available, lets initialize user and ID for schoolList (to be used for delete school)
+    componentDidMount(){
+        if(this.props.currentUser.id){
+            this.user = this.props.currentUser;
+            userListID = this.user.schoolList.id;
+        }
+    }
 
-// class SearchResults extends Component {
-//     data = [];
+    // method to delete school from Favorites list
+    deleteFavoriteSchool = (event) => {
+        let schoolToDelete = event.target.id
+        // need to send the ListID and the schoolID for the school we wish to delete
+        this.props.deleteSchoolFromFavoriteList(userListID, schoolToDelete);
+    }
+    
+    // formatting for link to external school url
+    linkFormatter(cell, row) {return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';}
 
-//     componentDidMount(){
-//         if(this.props.currentUser.id){
-//             let user = this.props.currentUser;
-//             this.props.getSchools(user.preferences.location, user.preferences.major)
-//         }
-        
-//     }
+    // formatting for link to internal school details page
+    internalLinkFormatter(cell, row) {return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';}
 
-//     linkFormatter(cell, row) {
-//         //console.log(cell)
-//         return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';
-//     }
+    // formatting for currency fields on table
+    formatCurrency(cell, row) {return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
 
-//     internalLinkFormatter(cell, row) {
-//         //console.log(cell)
-//         return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
-//     }
+    // formatting for admission rate percentage field on table
+    formatAdminRate(cell, row) {return cell + "%"}
 
-//     render() {
+    // formatting for delete button on table
+    buttonFormatter = (cell, row) => {return <Button id={cell} bsStyle="danger" bsSize="xsmall" onClick={this.deleteFavoriteSchool} >Delete</Button>;}
 
-//         const getDegree = {
-//             0: 'Non-Degree-Granting',
-//             1: 'Certificate',
-//             2: 'Associate',
-//             3: "Bachelor's",
-//             4: 'Graduate'
-//         }
-        
-//         const getOwnership = {
-//             1: "Public",
-//             2: "Private N-P",
-//             3: "Private F-P"
-//         }
-      
-//         const getLocale = {
-//             11:"City: 250k+",
-//             12:"City: 100-250k",
-//             13:"City: <100k",
-//             21:"Suburb: 250k+",
-//             22:"Suburb: 100-250k",
-//             23:"Suburb: <100k",
-//             31:"Town: Fringe",
-//             32:"Town: Distant",
-//             33:"Town: Remote",
-//             41:"Rural: Fringe",
-//             42:"Rural: Distant",
-//             43:"Rural: Remote"
-//         }
+    render() {
+        // if state has been updated with deletedSchool, we need to refresh our currentUser info
+        if(this.props.deletedSchool){
+            this.props.refreshUser();
+            this.user = this.props.currentUser;
+            userListID = this.user.schoolList.id;
+        }
 
-//         if(this.props.searchResults){
-//             this.data = this.props.searchResults.map(
-//               school => {
-//                 let temp = parseInt(school['2015.cost.avg_net_price.public'])
-//                 let nameLink = school['school.school_url']
-      
-//                 return { 
-//                   id: school.id,
-//                   name: school['school.name'],
-//                   netCost: temp,
-//                   inState: school["2015.cost.tuition.in_state"],
-//                   outState: school["2015.cost.tuition.out_of_state"],
-//                   location: getLocale[school["school.locale"]],
-//                   size: school["2015.student.size"],
-//                   state: school["school.state"],
-//                   admission: school["2015.admissions.admission_rate.overall"],
-//                   highestDegree: getDegree[school["school.degrees_awarded.highest"]],
-//                   ownership: getOwnership[school["school.ownership"]],
-//                   schoolUrl: nameLink
-//                 }
-//               }
-//             )
+        // only step into our render logic if we have a schoolList on our currentUser
+        if(this.props.currentUser.schoolList.schools){
+            // let's use an arrow function to map schoolList.schools to this.data for our table
+            this.data = this.props.currentUser.schoolList.schools.map(
+              school => {
+                return { 
+                  id: school.schoolApiId,
+                  favSchoolId: school.id,
+                  name: school.schoolName,
+                  netCost: school.avgNet,
+                  inState: school.inState,
+                  outState: school.outState,
+                  location: school.schoolLocation,
+                  size: school.size,
+                  state: school.state,
+                  admission: Math.round(school.admission * 100),
+                  highestDegree: school.highestDegree,
+                  ownership: school.ownership,
+                  schoolUrl: school.schoolUrl
+                }
+              }
+            )
           
-      
-//           // return inside the if
-//           return (
-            
-//             <div className="container favoriteTable">
-//               <BootstrapTable data={ this.data } selectRow={ selectRowProp } search exportCSV={ true } pagination striped>
-//                 {<TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'50'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>}
-//                 <TableHeaderColumn row='0' colSpan='7'>Basic School Info</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='name' dataSort width={"300"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='size' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-//                 dataFormat={ formatFloat }>Size</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='location' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Location</TableHeaderColumn>
-//                 <TableHeaderColumn id="state" row='1' dataField='state' dataSort width={"80"} filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
-//                 {<TableHeaderColumn row='1' dataField='admission' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Admission %</TableHeaderColumn>}
-//                 <TableHeaderColumn row='1' dataField='highestDegree' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Highest Degree</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
-//                 <TableHeaderColumn row='0' colSpan='3'>School Cost Information</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='inState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-//                 dataFormat={ formatFloat }>In-State</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='outState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-//                 dataFormat={ formatFloat }>Out-of-State</TableHeaderColumn>
-//                 <TableHeaderColumn row='1' dataField='netCost' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-//                 dataFormat={ formatFloat }>Avg Net</TableHeaderColumn>
-//               </BootstrapTable>
-//               <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
-//             </div>
-      
-//           );
-//         }
-      
-//         //return outside the if for when we are waiting for the data
-//         return (<div>loading...</div>)
-        
-//     }
-// }
+          // return inside the if (schoolList) logic
+          return (
+            // fancy React-Bootstrap table
+            <div className="container favoriteTable">
+                <h1 className="faveTitle">Your Favorite List</h1>
+                <BootstrapTable data={ this.data } search exportCSV={ true } pagination striped>
+                    {<TableHeaderColumn row='0' rowSpan='2' dataField='favSchoolId' width={'65'} dataFormat={this.buttonFormatter}></TableHeaderColumn>}
+                    {<TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'50'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>}
+                    <TableHeaderColumn row='0' colSpan='7'>Basic School Info</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='size' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ formatFloat }>Size</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='location' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } }>Location</TableHeaderColumn>
+                    <TableHeaderColumn id="state" row='1' dataField='state' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
+                    {<TableHeaderColumn row='1' dataField='admission' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } } dataFormat={ this.formatAdminRate }>Admission %</TableHeaderColumn>}
+                    <TableHeaderColumn row='1' dataField='highestDegree' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } }>Highest Degree</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} dataSort width={'150'} filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
+                    <TableHeaderColumn row='0' colSpan='3'>School Cost Information</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='inState' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='outState' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='netCost' dataSort  width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>Avg Net</TableHeaderColumn>
+              </BootstrapTable>
 
-// export default SearchResults;
+              <footer className="footer navbar-fixed-bottom">
+                    <div className="preferences">
+                        <h3>&copy; </h3>
+                        <h2 className="heading" display="hidden"> 2017</h2><br />
+                    </div>
+              </footer>
+              <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
+            </div>
+          );
+        }
+        //return outside the if for when we have no favorites list
+        return (
+        <div>
+            <h1>There are currently no schools in your favorites list</h1>
+        </div>
+        )
+    }
+}
+
+export default FavoriteList;

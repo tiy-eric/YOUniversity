@@ -1,24 +1,31 @@
-// import { connect } from 'react-redux'
-// import { addSchoolToFavoriteList } from "../actions/User";
+import { connect } from 'react-redux'
+import { refreshUser, deleteSchoolFromFavoriteList } from '../actions/User'
 
-// import FavoriteList from '../components/FavoriteList'
+import FavoriteList from '../components/FavoriteList'
 
-// const mapStateToProps = state => {
-//   return {
-//     currentUser: state.user.currentUser,
-//     favorites: state.school.favorites
-//   }
-// }
+//  map the following items from redux state to props in FavoriteList component
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser,
+    userRefreshed: state.user.refreshUser,
+    deletedSchool: state.user.deletedSchool
+  }
+}
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     addSchoolToFavoriteList: (listID, school) => {
-//       dispatch(addSchoolToFavoriteList(listID, school))
-//     }
-//   }
-// }
+// map the following functions from Actions files into FavoriteList component props for use there
+const mapDispatchToProps = dispatch => {
+  return {
+    refreshUser: () => {
+      dispatch(refreshUser())
+    },
+    deleteSchoolFromFavoriteList: (listID, school) => {
+      dispatch(deleteSchoolFromFavoriteList(listID, school))
+    },
+  }
+}
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(FavoriteList)
+// here is where we actually connect the props to the FavoriteList component
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FavoriteList)

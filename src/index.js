@@ -40,8 +40,8 @@ ReactDOM.render(
             <Route path="/register" component={RegisterContainer} />
             <Route path="/searchresults" component={SearchResultsContainer} />
             <Route path="/edituser" component={EditUserContainer} />
+            <Route path="/favoritelist" component={FavoriteList} />
             <Route path="schooldetails/:id" component={SchoolDetailsContainer}/>
-            {/* <Route path="/favoriteList" component={FavoriteList} /> */}
         </Route>
       </Router>
     </div>

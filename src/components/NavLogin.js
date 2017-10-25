@@ -4,6 +4,8 @@ import { Link, browserHistory } from 'react-router';
 
 import {User} from '../models/User'
 
+import './NavLogin.css'
+
 class NavLogin extends Component {
     
     loginUser = event => {
@@ -15,8 +17,10 @@ class NavLogin extends Component {
         user.password = form.password.value
   
         this.props.login(user)
-        browserHistory.push('/searchresults');
-  
+            .then( result => {
+                browserHistory.push('/searchresults');
+            })
+        
     }
 
     logoutUser = event => {
@@ -27,20 +31,23 @@ class NavLogin extends Component {
   
     render() {
         
-        if(this.props.currentUser.id){
+        if(this.props.currentUser){
             
           let user = this.props.currentUser;
   
           return (
               <div>
-                <Navbar.Brand>
-                    <Link to="/searchresults">SearchResults</Link>
-                </Navbar.Brand>
-                <Navbar.Brand>
-                    <Link to="/edituser">Edit Preferences</Link>
-                </Navbar.Brand>
-                <Navbar.Text pullRight>
-                    Signed in as: {user.firstName} {user.lastName} (<Navbar.Link onClick={this.logoutUser} href="#">Logout</Navbar.Link>)
+                <Navbar.Text>
+                      <Link className="navh4" to="/searchresults">Search Results</Link>
+                </Navbar.Text>
+                <Navbar.Text>
+                      <Link className="navh4" to="/edituser">Edit Preferences</Link>
+                </Navbar.Text>
+                <Navbar.Text>
+                      <Link className="navh4" to="/favoritelist">Favorites</Link>
+                </Navbar.Text>
+                <Navbar.Text pullRight className="signedin">
+                      Signed in as: {user.firstName} {user.lastName}<Navbar.Link onClick={this.logoutUser} href="#" className="logoutlink">(Logout)</Navbar.Link>
                 </Navbar.Text>
             </div>
           )
@@ -50,7 +57,7 @@ class NavLogin extends Component {
         return (
             <div>
                 <form onSubmit={this.loginUser}>
-                    <Navbar.Form pullRight>
+                    <Navbar.Form pullRight className="userLogin">
                         <FormGroup>
                             <FormControl name="username" type="text" placeholder="username" />
                         </FormGroup>
@@ -59,10 +66,13 @@ class NavLogin extends Component {
                             <FormControl name="password" type="password" placeholder="password" />
                         </FormGroup>
                         {' '}
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" id="backbutton">Login</Button>
                     </Navbar.Form>
-                    <Navbar.Text pullRight>
-                        <Link to="/register">Create an Account</Link> or Login
+
+                    <Navbar.Text pullRight className="userOption">
+                        <Link to="/register" className="createAccount">Create an Account</Link> 
+                        <span className="loginOption">or Login&nbsp;<span className="glyphicon glyphicon-arrow-right"></span></span>
+
                     </Navbar.Text>
                 </form>
             </div>

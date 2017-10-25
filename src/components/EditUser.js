@@ -29,7 +29,8 @@ function FieldGroup({ id, label, help, ...props }) {
 class EditUser extends Component {
 
     currentLocations = this.props.currentUser.preferences.location.split(",");
-    currentMajors = this.props.currentUser.preferences.major.split(",");
+    currentMajors = this.props.currentUser.preferences.major;
+    // currentMajors = this.props.currentUser.preferences.major.split(",");
     //method to render the option values for a dropdown
     //used for states, cost, and majors
     renderOptions = (value, key) => {
@@ -146,54 +147,34 @@ class EditUser extends Component {
                 />
                 
                 <br />
-            {/* <label><h4><b>Preferences</b></h4> </label>
+        
 
-            <table>
-                <thead>
-            <tr>
-                <th><label>States (select one or more)</label></th>
-                <th><label>Area of Study (select one)</label></th>
-            </tr>
-</thead>
-<tbody>
-            <tr>
-             <td>     
+                <label>Major</label>
                 <div className="form-group">
-                <select defaultValue={this.currentLocations} multiple="true" name="location" className="selections">
-                    {states.map(this.renderOptions)}
-                </select> 
-                </div>
-              </td>
-              <td>
-                <div className="form-group">
-                   <select defaultValue={this.currentMajors} multiple="true" name="location" className="selections">
-                    {majors.map(this.renderOptions)}
-                    </select>
-                </div>      
-              </td>  
-            </tr>
-            </tbody>
-        </table> */}
-
-                        <label>Major</label>
-                <div className="form-group">
-                    <select defaultValue={this.currentMajors} multiple="true" name="major">
+                    <select defaultValue={this.currentMajors} name="major">
                         {majors.map(this.renderOptions)}
                     </select>
                 </div>
         
                 <label>Location</label>
                 <div className="form-group">
-                    <select defaultValue={this.currentLocations} multiple="true" name="location">
+                    <select defaultValue={this.currentLocations} style={{ width: '40%' }} multiple="true" name="location">
                         {states.map(this.renderOptions)}
                     </select> 
                 </div>
 
 
-                <Button  className="btn btn-default"type="submit" id="submit">Edit Profile</Button>
+                <Button  className="btn btn-default"type="submit" id="submit"><b>Edit Profile</b></Button>
 
                 </form>
             </Panel>
+
+            <footer className="footer navbar-fixed-bottom">
+                <div className="preferences">
+                    <h3>&copy; </h3>
+                    <h2 className="heading" display="hidden"> 2017</h2><br />
+                </div>
+            </footer>
         </div>
 
     );

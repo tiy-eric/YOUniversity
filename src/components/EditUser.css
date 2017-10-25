@@ -3,11 +3,12 @@
 #edituser {
     display: grid;
     padding: 1em;
-    background: #9eccc6;
+    background: #212221;
     border: 1px solid #c1c1c1;
     margin: 2rem auto 0 auto;
     max-width: 600px;
     padding: 1em;
+
 }
 
 form input {
@@ -17,11 +18,11 @@ form input {
 }
 
 #submit {
-    background: #47558b;
+    background: #f6cc45;
     padding: 0.7em;
     width: 100%;
     border: 0;
-    color: white;
+    color: black;
 }
 
 #submit:hover {
@@ -30,6 +31,7 @@ form input {
 
 label {
     padding: 0.5em 0.5em 0.5em 0;
+        color: #f6cc45;
 }
 
 input {
@@ -44,5 +46,6 @@ input:focus {
 }
 
 #panel {
-    margin-top: 50px;
+    margin-top: 90px;
+    margin-bottom: 90px;
 }

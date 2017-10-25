@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Modal, Button } from 'react-bootstrap';
 import "./SchoolDetails.css";
+
 class SchoolDetails extends Component {
 
 componentDidMount() {
@@ -14,6 +15,9 @@ componentDidMount() {
 }
 
   render() {
+
+    //  a bunch of constant methods to map codes to strings for display purposes
+
     const getDegree = {
         0: 'Non-Degree-Granting',
         1: 'Certificate',
@@ -53,12 +57,12 @@ componentDidMount() {
         43:"Rural: Remote (rural territory more than 25 miles from an urbanized area and more than 10 miles from an urban cluster)"
       }
 
-      console.log(`this.props.schooldetails is ${JSON.stringify(this.props.schooldetails)}`)
-
-      console.log(this.props.currentSchool)
+      
       // if we have schooldetails data we are ready to render details page
       if(this.props.currentSchool){
+        // grab currentSchool out of props, which came from API call in schoolDetails, and store in college variable
         let college = this.props.currentSchool[0];
+        // set url for external college website link
         let schoolURL = 'http://'+college["school.school_url"]
       
         return (

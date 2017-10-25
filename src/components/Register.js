@@ -59,7 +59,6 @@ class Register extends Component {
                 case "location":
                     var value = "";
                     for (var i = 0; i < input.length; i++) {
-                        console.log(input.length)
                         if (input[i].selected) {
                         value += input[i].value + ","
                         }
@@ -95,7 +94,7 @@ class Register extends Component {
     if(this.props.registeredUser){
         let newUser = this.props.registeredUser;
         return (
-            <div className="container">
+            <div className="container confirmation">
                 <Panel header="Welcome to YOUniversity!">
                     <h4>Welcome {newUser.firstName}! You registered successfully!</h4>
                     <p>Please login with your email and password to get started</p>
@@ -179,14 +178,14 @@ class Register extends Component {
 
             <label>Major</label>
                 <div className="form-group">
-                    <select defaultValue={this.currentMajors} multiple="true" name="major">
+                    <select defaultValue={this.currentMajors} name="major">
                         {majors.map(this.renderOptions)}
                     </select>
                 </div>
         
                 <label>Location</label>
                 <div className="form-group">
-                    <select defaultValue={this.currentLocations} multiple="true" name="location">
+                    <select defaultValue={this.currentLocations} style={{ width: '40%' }} multiple="true" name="location">
                         {states.map(this.renderOptions)}
                     </select> 
                 </div>
@@ -195,6 +194,16 @@ class Register extends Component {
 
                 </form>
             </Panel>
+
+
+            <footer className="footer navbar-fixed-bottom">
+
+                <div className="preferences">
+                    <h3>&copy; </h3>
+                    <h2 className="heading" display="hidden"> 2017</h2><br />
+                </div>
+
+            </footer>
         </div>
 
     );
