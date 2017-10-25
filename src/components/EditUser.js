@@ -147,36 +147,9 @@ class EditUser extends Component {
                 />
                 
                 <br />
-            {/* <label><h4><b>Preferences</b></h4> </label>
+        
 
-            <table>
-                <thead>
-            <tr>
-                <th><label>States (select one or more)</label></th>
-                <th><label>Area of Study (select one)</label></th>
-            </tr>
-</thead>
-<tbody>
-            <tr>
-             <td>     
-                <div className="form-group">
-                <select defaultValue={this.currentLocations} multiple="true" name="location" className="selections">
-                    {states.map(this.renderOptions)}
-                </select> 
-                </div>
-              </td>
-              <td>
-                <div className="form-group">
-                   <select defaultValue={this.currentMajors} multiple="true" name="location" className="selections">
-                    {majors.map(this.renderOptions)}
-                    </select>
-                </div>      
-              </td>  
-            </tr>
-            </tbody>
-        </table> */}
-
-                        <label>Major</label>
+                <label>Major</label>
                 <div className="form-group">
                     <select defaultValue={this.currentMajors} name="major">
                         {majors.map(this.renderOptions)}
@@ -191,18 +164,16 @@ class EditUser extends Component {
                 </div>
 
 
-                <Button  className="btn btn-default"type="submit" id="submit">Edit Profile</Button>
+                <Button  className="btn btn-default"type="submit" id="submit"><b>Edit Profile</b></Button>
 
                 </form>
             </Panel>
 
             <footer className="footer navbar-fixed-bottom">
-
                 <div className="preferences">
                     <h3>&copy; </h3>
                     <h2 className="heading" display="hidden"> 2017</h2><br />
                 </div>
-
             </footer>
         </div>
 
