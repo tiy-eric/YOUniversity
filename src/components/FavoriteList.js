@@ -23,7 +23,6 @@ class FavoriteList extends Component {
             this.user = this.props.currentUser;
             userListID = this.user.schoolList.id;
         }
-        
     }
 
     // method to delete school from Favorites list
@@ -31,36 +30,24 @@ class FavoriteList extends Component {
         let schoolToDelete = event.target.id
         // need to send the ListID and the schoolID for the school we wish to delete
         this.props.deleteSchoolFromFavoriteList(userListID, schoolToDelete);
-
     }
     
     // formatting for link to external school url
-    linkFormatter(cell, row) {
-        return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';
-    }
+    linkFormatter(cell, row) {return '<a href="http://'+cell+'" target="_blank">'+cell+'</a>';}
 
     // formatting for link to internal school details page
-    internalLinkFormatter(cell, row) {
-        return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';
-    }
+    internalLinkFormatter(cell, row) {return '<a href=schooldetails/'+cell+' target="_blank">Details</a>';}
 
     // formatting for currency fields on table
-    formatCurrency(cell, row) {
-        return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-    }
+    formatCurrency(cell, row) {return "$"+cell.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}
 
     // formatting for admission rate percentage field on table
-    formatAdminRate(cell, row) {
-        return cell + "%"
-    }
+    formatAdminRate(cell, row) {return cell + "%"}
 
     // formatting for delete button on table
-    buttonFormatter = (cell, row) => {
-        return <Button id={cell} bsStyle="danger" bsSize="xsmall" onClick={this.deleteFavoriteSchool} >Delete</Button>;
-    }
+    buttonFormatter = (cell, row) => {return <Button id={cell} bsStyle="danger" bsSize="xsmall" onClick={this.deleteFavoriteSchool} >Delete</Button>;}
 
     render() {
-     
         // if state has been updated with deletedSchool, we need to refresh our currentUser info
         if(this.props.deletedSchool){
             this.props.refreshUser();
@@ -73,7 +60,6 @@ class FavoriteList extends Component {
             // let's use an arrow function to map schoolList.schools to this.data for our table
             this.data = this.props.currentUser.schoolList.schools.map(
               school => {
-      
                 return { 
                   id: school.schoolApiId,
                   favSchoolId: school.id,
@@ -92,55 +78,48 @@ class FavoriteList extends Component {
               }
             )
           
-      
           // return inside the if (schoolList) logic
           return (
-            
             // fancy React-Bootstrap table
             <div className="container favoriteTable">
-              <BootstrapTable data={ this.data } search exportCSV={ true } pagination striped>
-                {<TableHeaderColumn row='0' rowSpan='2' dataField='favSchoolId' width={'65'} dataFormat={this.buttonFormatter}></TableHeaderColumn>}
-                {<TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'50'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>}
-                <TableHeaderColumn row='0' colSpan='7'>Basic School Info</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='size' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ formatFloat }>Size</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='location' dataSort width={"100"} filter={ { type: 'TextFilter', delay: 400 } }>Location</TableHeaderColumn>
-                <TableHeaderColumn id="state" row='1' dataField='state' dataSort width={"80"} filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
-                {<TableHeaderColumn row='1' dataField='admission' dataSort filter={ { type: 'TextFilter', delay: 400 } } dataFormat={ this.formatAdminRate }>Admission %</TableHeaderColumn>}
-                <TableHeaderColumn row='1' dataField='highestDegree' dataSort filter={ { type: 'TextFilter', delay: 400 } }>Highest Degree</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} dataSort filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
-                <TableHeaderColumn row='0' colSpan='3'>School Cost Information</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='inState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='outState' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
-                <TableHeaderColumn row='1' dataField='netCost' dataSort filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
-                dataFormat={ this.formatCurrency }>Avg Net</TableHeaderColumn>
+                <h1 className="faveTitle">Your Favorite List</h1>
+                <BootstrapTable data={ this.data } search exportCSV={ true } pagination striped>
+                    {<TableHeaderColumn row='0' rowSpan='2' dataField='favSchoolId' width={'65'} dataFormat={this.buttonFormatter}></TableHeaderColumn>}
+                    {<TableHeaderColumn row='0' rowSpan='2' dataField='id' isKey={ true } width={'50'} dataFormat={this.internalLinkFormatter}></TableHeaderColumn>}
+                    <TableHeaderColumn row='0' colSpan='7'>Basic School Info</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='name' dataSort width={"250"} filter={ { type: 'TextFilter', delay: 400 } }>Name</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='size' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ formatFloat }>Size</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='location' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } }>Location</TableHeaderColumn>
+                    <TableHeaderColumn id="state" row='1' dataField='state' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } }>ST</TableHeaderColumn>
+                    {<TableHeaderColumn row='1' dataField='admission' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } } dataFormat={ this.formatAdminRate }>Admission %</TableHeaderColumn>}
+                    <TableHeaderColumn row='1' dataField='highestDegree' dataSort width={'120'} filter={ { type: 'TextFilter', delay: 400 } }>Highest Degree</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='schoolUrl' dataFormat={this.linkFormatter} dataSort width={'150'} filter={ { type: 'TextFilter', delay: 400 } }>School URL</TableHeaderColumn>
+                    <TableHeaderColumn row='0' colSpan='3'>School Cost Information</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='inState' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>In-State</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='outState' dataSort width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>Out-of-State</TableHeaderColumn>
+                    <TableHeaderColumn row='1' dataField='netCost' dataSort  width={'120'} filter={ { type: 'NumberFilter', delay: 400, numberComparators: [ '=', '>', '<' ] } }
+                    dataFormat={ this.formatCurrency }>Avg Net</TableHeaderColumn>
               </BootstrapTable>
 
-
               <footer className="footer navbar-fixed-bottom">
-
-                  <div className="preferences">
-                      <h3>&copy; </h3>
-                      <h2 className="heading" display="hidden"> 2017</h2><br />
-                  </div>
-
+                    <div className="preferences">
+                        <h3>&copy; </h3>
+                        <h2 className="heading" display="hidden"> 2017</h2><br />
+                    </div>
               </footer>
               <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js" />
             </div>
-      
           );
         }
-      
         //return outside the if for when we have no favorites list
         return (
         <div>
             <h1>There are currently no schools in your favorites list</h1>
         </div>
         )
-        
     }
 }
 

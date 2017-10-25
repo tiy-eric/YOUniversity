@@ -178,4 +178,14 @@ input.number-filter-input.form-control{
         margin-right: 0px;
         padding: 0;
     }
+
+    h3.itemTitle{
+        padding-right: 0;
+        margin-left: 20px;
+        margin-right: 5px;
+    }
+    h3.item{
+        margin-left: -10px;
+        margin-right: 5px;
+    }
 }
