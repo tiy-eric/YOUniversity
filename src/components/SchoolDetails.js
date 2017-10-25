@@ -72,7 +72,7 @@ componentDidMount() {
               <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="details-container">
+              <div className="container details-container">
                 <Col sm={12} md={12} lg={12} className="details-title">
                   <h1>{college["school.name"]}</h1>
                 </Col>

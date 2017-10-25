@@ -198,7 +198,14 @@ class SearchResults extends Component {
                         <h3 className="item">{this.user.preferences.location}</h3>
                     </div>
                 </footer>
+
+                <div>
+                    <SchoolDetailsContainer selectedSchoolID={236939} show={true} />
+                </div>
+
             </div>
+
+            
           );
         }
         return (<div>loading...</div>) 
